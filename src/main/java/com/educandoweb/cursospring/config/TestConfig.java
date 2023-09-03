@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.educandoweb.cursospring.entities.Category;
 import com.educandoweb.cursospring.entities.Order;
+import com.educandoweb.cursospring.entities.OrderItem;
 import com.educandoweb.cursospring.entities.Product;
 import com.educandoweb.cursospring.entities.User;
 import com.educandoweb.cursospring.entities.enums.OrderStatus;
 import com.educandoweb.cursospring.repositories.CategoryRepository;
+import com.educandoweb.cursospring.repositories.OrderItemRepository;
 import com.educandoweb.cursospring.repositories.OrderRepository;
 import com.educandoweb.cursospring.repositories.ProductRepository;
 import com.educandoweb.cursospring.repositories.UserRepository;
@@ -36,6 +38,8 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Autowired
+	private OrderItemRepository OrderItemRepository;
 	
 	
 
@@ -77,8 +81,14 @@ public class TestConfig implements CommandLineRunner {
 		
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
+		OrderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 		
+			
 		
 	}
 	
