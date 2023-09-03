@@ -8,7 +8,7 @@ import com.educandoweb.cursospring.entities.Product;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
+//import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Embeddable
@@ -32,9 +32,11 @@ public class OrderItemPk implements Serializable {
 		public void setOrder(Order order) {
 			this.order = order;
 		}
+		
 		public Product getProduct() {
 			return product;
 		}
+		
 		public void setProduct(Product product) {
 			this.product = product;
 		}
