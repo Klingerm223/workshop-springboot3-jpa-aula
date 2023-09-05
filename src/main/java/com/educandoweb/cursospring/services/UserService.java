@@ -14,9 +14,11 @@ import com.educandoweb.cursospring.repositories.UserRepository;
 import com.educandoweb.cursospring.services.exceptions.DatabaseException;
 import com.educandoweb.cursospring.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repository;
 
@@ -38,26 +40,34 @@ public class UserService {
 	public void delete(Long id) {
 
 		try {
-			if(repository.existsById(id)){ 
-				   repository.deleteById(id);
-				}
-			else {
+			if (repository.existsById(id)) {
+				repository.deleteById(id);
+			} else {
 				throw new DatabaseException("Usuario nao encontrado!!");
 			}
-			
+
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
 		}
-		
+
 		catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
 
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+
+		try {
+
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+
+		} catch (EntityNotFoundException e) {
+			//e.printStackTrace();
+			throw new ResourceNotFoundException(id);
+		}
+		
 	}
 
 	private void updateData(User entity, User obj) {
